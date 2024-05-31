@@ -13,13 +13,18 @@ int main() {
     map<wstring, int> wordCountMap;
     map<wstring, set<int>> wordLines;
 
-    wordCountMap = countWords(readFile(inputFilename), wordLines);
+    wstring text = readFile(inputFilename);
+    wordCountMap = countWords(text, wordLines);
 
-    string outputFilename = "WordCount.txt";
-    string crossRefFilename = "CrossReference.txt";
+    string outputFilename = "data/WordCount.txt";
+    string crossRefFilename = "data/CrossReference.txt";
+    string urlFilename = "data/URLs.txt";
 
     GenerateWordCountFile(outputFilename, wordCountMap);
     GenerateCrossReferenceFile(crossRefFilename, wordLines, wordCountMap);
+
+    set<wstring> urls = ExtractURLs(text);
+    GenerateUrlFile(urlFilename, urls);
 
     cout << "Programa suveike" << endl;
 
