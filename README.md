@@ -21,3 +21,12 @@ kad kiekvienas URL adresas bus saugomas tik vieną kartą bei leidžia greitai p
 5) Aplanke *Egzaminas* atsiras aplankas *Debug*, ten bus programos sugeneruoti failai **"URLs.txt"** (Išrinkti URL adresai), **"WordCount.txt"**(Suskaičiuoti žodžiai tekste), **"CrossReference.txt"**(Eilutės, kuriuose pasikartoja žodžiai)
 6) Norint pakeisti tekstą, su kuria vykdoma programa, reikia *Debug* aplanke pakeisti *input.txt* failo turinį. (Prieš paleidžiant programą, *input.txt* failas bus pagrindiniame aplanke)
 
+# Dokumentacijos atidarymas  
+**HTML:** 
+1) Atidarykite aplanką **"Documentation"**
+2) Atidarykite aplanką **"html"**
+3) Atidarykite failą **"index.html"**
+
+**TeX:**
+1) Atidarykite aplanką **"Documentation"**
+2) **latex** dokumentaciją galite atidaryti naudojant **TexLive** kompiliatorių arba naudojant **OverLeaf** naršyklėje.
