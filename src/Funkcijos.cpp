@@ -6,6 +6,7 @@
 #include <iostream>
 #include <locale>
 #include <codecvt>
+#include <regex>
 
 using namespace std;
 
@@ -79,5 +80,31 @@ void GenerateCrossReferenceFile(const std::string& filename, const std::map<std:
             }
             outFile << endl;
         }
+    }
+}
+
+// Ištraukti URL 
+std::set<std::wstring> ExtractURLs(const std::wstring& text) {
+    wregex urlRegex(LR"((https?://[^\s/$.?#].[^\s]*)|(www\.[^\s/$.?#].[^\s]*)|(\b[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b))");
+    wsmatch urlMatch;
+    set<wstring> urls;
+
+    auto start = text.cbegin();
+    auto end = text.cend();
+    while (regex_search(start, end, urlMatch, urlRegex)) {
+        urls.insert(urlMatch[0].str());
+        start = urlMatch.suffix().first;
+    }
+
+    return urls;
+}
+
+// Sugeneruoti URL Failą
+void GenerateUrlFile(const std::string& filename, const std::set<std::wstring>& urls) {
+    wofstream outFile(filename);
+    outFile.imbue(locale(outFile.getloc(), new codecvt_utf8<wchar_t>));
+    for (const auto& url : urls) {
+        outFile << url << endl;
+        outFile << " " << endl;
     }
 }
