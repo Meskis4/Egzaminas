@@ -13,3 +13,7 @@ bool isNumber(const std::wstring& word);
 void GenerateWordCountFile(const std::string& filename, const std::map<std::wstring, int>& wordCountMap);
 
 void GenerateCrossReferenceFile(const std::string& filename, const std::map<std::wstring, std::set<int>>& wordLines, const std::map<std::wstring, int>& wordCountMap);
+
+std::set<std::wstring> ExtractURLs(const std::wstring& text);
+
+void GenerateUrlFile(const std::string& filename, const std::set<std::wstring>& urls);
