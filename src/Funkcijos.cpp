@@ -34,26 +34,29 @@ bool isNumber(const std::wstring& word) {
     return all_of(word.begin(), word.end(), iswdigit);
 }
 
-// Suskaičiuoja žodžius
-std::map<std::wstring, int> countWords(const std::wstring& text) {
+// Suskaičiuoja žodžius ir nustato žodžių eilutes
+std::map<std::wstring, int> countWords(const std::wstring& text, std::map<std::wstring, std::set<int>>& wordLines) {
     std::map<std::wstring, int> wordCountMap;
     std::wistringstream stream(text);
     std::wstring line;
+    int lineNumber = 0;
 
     while (std::getline(stream, line)) {
+        lineNumber++;
         std::wistringstream lineStream(line);
         std::wstring word;
         while (lineStream >> word) {
             std::wstring cleanedWord = cleanWord(word);
             if (!cleanedWord.empty() && !isNumber(cleanedWord)) {
                 wordCountMap[cleanedWord]++;
+                wordLines[cleanedWord].insert(lineNumber);
             }
         }
     }
     return wordCountMap;
 }
 
-// Atspausdina failą su žodžių kiekiu
+// Sugeneruoja failą su žodžių kiekiu
 void GenerateWordCountFile(const std::string& filename, const std::map<std::wstring, int>& wordCountMap) {
     wofstream outFile(filename);
     outFile.imbue(locale(outFile.getloc(), new codecvt_utf8<wchar_t>));
@@ -64,3 +67,17 @@ void GenerateWordCountFile(const std::string& filename, const std::map<std::wstr
     }
 }
 
+//Sugeneruoja failą su eilutėmis, kuriuose yra žodžiai
+void GenerateCrossReferenceFile(const std::string& filename, const std::map<std::wstring, std::set<int>>& wordLines, const std::map<std::wstring, int>& wordCountMap) {
+    wofstream outFile(filename);
+    outFile.imbue(locale(outFile.getloc(), new codecvt_utf8<wchar_t>));
+    for (const auto& pair : wordLines) {
+        if (wordCountMap.at(pair.first) > 1) {
+            outFile << pair.first << L": ";
+            for (const auto& line : pair.second) {
+                outFile << line << L" ";
+            }
+            outFile << endl;
+        }
+    }
+}
