@@ -16,9 +16,9 @@ int main() {
     wstring text = readFile(inputFilename);
     wordCountMap = countWords(text, wordLines);
 
-    string outputFilename = "data/WordCount.txt";
-    string crossRefFilename = "data/CrossReference.txt";
-    string urlFilename = "data/URLs.txt";
+    string outputFilename = "WordCount.txt";
+    string crossRefFilename = "CrossReference.txt";
+    string urlFilename = "URLs.txt";
 
     GenerateWordCountFile(outputFilename, wordCountMap);
     GenerateCrossReferenceFile(crossRefFilename, wordLines, wordCountMap);
